@@ -1,0 +1,21 @@
+---
+title: "childes_db_tutorial"
+output: html_document
+---
+
+Imports
+```{r setup, include=FALSE}
+library(tidyverse)
+library(RMySQL)
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Open connection to DB
+```{r}
+host = "ec2-54-68-171-132.us-west-2.compute.amazonaws.com"
+dbname = "childesdb"
+user = "childesdb"
+password = "uy5z4hf7ihBjf"
+con <- DBI::dbConnect(RMySQL::MySQL(), host = host, user = user, dbname = dbname, password = password)
+```
+
