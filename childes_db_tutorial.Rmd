@@ -19,3 +19,31 @@ password = "uy5z4hf7ihBjf"
 con <- DBI::dbConnect(RMySQL::MySQL(), host = host, user = user, dbname = dbname, password = password)
 ```
 
+Get number of corpora
+```{r}
+count(tbl(con, "corpus"))
+```
+
+Get number of transcripts per child
+```{r}
+tbl(con, "transcript") %>%
+  group_by(target_child_id, target_child_name) %>%
+  summarise(num_transcripts=n())
+```
+
+Get most common types of participants
+```{r}
+tbl(con, "participant") %>%
+  group_by(role) %>%
+  summarise(num_occurences=n()) %>%
+  arrange(desc(num_occurences))
+```
+
+Get all token counts from children under the age of 18 months by gender
+```{r}
+tbl(con, "token") %>%
+  filter(speaker_role=="Target_Child", target_child_age/30 < 18) %>%
+  group_by(target_child_sex) %>%
+  summarise(total=n())
+```
+
